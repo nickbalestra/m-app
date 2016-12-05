@@ -1,9 +1,12 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import { createEpicMiddleware, combineEpics } from 'redux-observable'
 import Rx from 'rxjs/Rx'
+import persistState from 'redux-localstorage'
 import { routerReducer, routerMiddleware, push } from 'react-router-redux'
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
+
+
 // ====================================
 // REDUCERS
 // ====================================
@@ -96,9 +99,15 @@ const epicLoginAttempt = action$ =>
 
 const epicMiddleware = createEpicMiddleware(epicLogin);
 const routermiddleware = routerMiddleware(browserHistory)
+
+const enhancer = compose(
+  applyMiddleware(epicMiddleware, routermiddleware),
+  persistState(/*paths, config*/),
+)
+
 const store = createStore(
   rootReducer,
-  applyMiddleware(epicMiddleware, routermiddleware)
+  enhancer
 )
 
 export default store
