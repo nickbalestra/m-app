@@ -1,8 +1,9 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
-import { createEpicMiddleware } from 'redux-observable'
+import { createEpicMiddleware, combineEpics } from 'redux-observable'
 import Rx from 'rxjs/Rx'
-
-
+import { routerReducer, routerMiddleware, push } from 'react-router-redux'
+import { browserHistory } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
 // ====================================
 // REDUCERS
 // ====================================
@@ -16,6 +17,7 @@ const initialAuthState = {
 }
 
 const authReducer = (state = initialAuthState, {type, payload}) => {
+  console.log('ACTION: ', {type, payload})
   switch (type) {
     case 'LOGIN':
       return {...state, inProgress: true}
@@ -51,6 +53,7 @@ const userInfoReducer = (state = initialUserInfoState, {type, payload}) => {
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userInfoReducer,
+  routing: routerReducer
 })
 
 
@@ -60,7 +63,7 @@ const rootReducer = combineReducers({
 
 // LOGIN EPIC
 // ------------------------------------
-const epicLogin = action$ =>
+const epicLoginAttempt = action$ =>
   action$
     .ofType('LOGIN')
     .mergeMap(({payload}) =>
@@ -76,16 +79,26 @@ const epicLogin = action$ =>
       .map(({response}) => ({ type: 'LOGIN-SUCCESS', payload: response.accessToken }))
     )
 
+  const epicLoginSuccess = action$ =>
+  action$
+    .ofType('LOGIN-SUCCESS')
+    .mapTo(push('/'))
+
+
+  const epicLogin = combineEpics(
+    epicLoginAttempt,
+    epicLoginSuccess
+  )
 
 // ====================================
 // STORE CONFIG
 // ====================================
 
 const epicMiddleware = createEpicMiddleware(epicLogin);
-
+const routermiddleware = routerMiddleware(browserHistory)
 const store = createStore(
   rootReducer,
-  applyMiddleware(epicMiddleware)
+  applyMiddleware(epicMiddleware, routermiddleware)
 )
 
 export default store

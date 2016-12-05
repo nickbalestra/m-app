@@ -6,6 +6,7 @@ import {
   Router,
   Route,
   IndexRoute } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
 
 import { mustBeLoggedIn, mustBeLoggedOut } from './auth'
 import store from './store'
@@ -15,10 +16,11 @@ import Login from './Login'
 import Logout from './Logout'
 import About from './About'
 
-
+const history = syncHistoryWithStore(browserHistory, store)
+history.listen(location => console.log(location.pathname))
 const App = () => (
   <Provider store={ store }>
-    <Router history={ browserHistory }>
+    <Router history={ history }>
       <Route path="/" component={ Main }>
         <IndexRoute component={ Dashboard } onEnter={ mustBeLoggedIn } />
         <Route path="/login" component={ Login } onEnter={ mustBeLoggedOut } />
