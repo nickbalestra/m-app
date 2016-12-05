@@ -23,10 +23,10 @@ const About = (props) => {
     <header className="">
       <div className="container">
         <div className="navbar-left">
-          {/*<Link to="/">
+          <Link to="/">
             <img className="logo logo-mark" src="https://monzo.com/static/images/logo-inverse.svg" alt="Monzo" />
             <img className="logo logo-full" src="https://monzo.com/static/images/logo-inverse.svg" alt="Monzo" />
-          </Link>*/}
+          </Link>
         </div>
         {
           props.loggedIn ?
