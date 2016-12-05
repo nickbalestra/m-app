@@ -102,7 +102,7 @@ const routermiddleware = routerMiddleware(browserHistory)
 
 const enhancer = compose(
   applyMiddleware(epicMiddleware, routermiddleware),
-  persistState(/*paths, config*/),
+  persistState(['auth', 'routing']/*, config*/),
 )
 
 const store = createStore(
