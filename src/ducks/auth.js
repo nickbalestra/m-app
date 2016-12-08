@@ -8,7 +8,7 @@ import { API_URL } from '../constants/api'
 const LOGIN = 'm-app/auth/LOGIN'
 const LOGIN_SUCCESS = 'm-app/auth/LOGIN_SUCCESS'
 const LOGIN_FAIL = 'm-app/auth/LOGIN_FAIL'
-const LOGOUT = 'm-app/auth/LOGOUT'
+export const LOGOUT = 'm-app/auth/LOGOUT'
 const LOGOUT_SUCCESS = 'm-app/auth/LOGOUT_SUCCESS'
 const LOGOUT_FAIL = 'm-app/auth/LOGOUT_FAIL'
 
@@ -22,6 +22,13 @@ export function doLogin(email, password) {
       email,
       password
     }
+  }
+}
+
+export function doLogout(msg) {
+  return {
+    type: LOGOUT,
+    payload: msg
   }
 }
 
@@ -49,6 +56,8 @@ export default function reducer(state = initialState, {type, payload}) {
       return {...state, inProgress: false, token: payload}
     case LOGIN_FAIL:
       return {...state, inProgress: false, error: payload}
+    case LOGOUT:
+      return {...state, token: null, inProgress: false, error: payload}
     default:
       return state
   }
@@ -71,6 +80,11 @@ const epicLogin = action$ =>
         }
       })
       .map(({ response }) => loginSuccess(response.accessToken))
+      .catch(error => Rx.Observable.of({
+        type: LOGIN_FAIL,
+        payload: error.xhr.response,
+        error: true
+      }))
     )
 
 const epicLoginSuccess = action$ =>
@@ -78,9 +92,21 @@ const epicLoginSuccess = action$ =>
     .ofType(LOGIN_SUCCESS)
     .mapTo(push('/'))
 
+const epicLogout = action$ =>
+  action$
+    .ofType(LOGOUT)
+    .mapTo(push('/login'))
+
+const epicLoginFail = action$ =>
+  action$
+    .ofType(LOGIN_FAIL)
+    .mapTo(doLogout())
+
 export const epic = combineEpics(
     epicLogin,
-    epicLoginSuccess
+    epicLoginSuccess,
+    epicLogout,
+    epicLoginFail
   )
 
 

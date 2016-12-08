@@ -1,3 +1,5 @@
+import {LOGOUT}from './auth'
+
 // ACTION TYPES (Format: app-name/reducer/ACTION_TYPE)
 // =======================================================
 const SET_EMAIL = 'm-app/user/SET_EMAIL'
@@ -34,6 +36,10 @@ export default function reducer(state = initialState, {type, payload}) {
       return {...state, email: payload}
     case SET_PASSWORD :
       return {...state, password: payload}
+    case SET_PASSWORD :
+      return {...state, password: payload}
+    case LOGOUT :
+      return initialState
     default:
       return state
   }

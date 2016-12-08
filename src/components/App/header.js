@@ -8,7 +8,7 @@ const About = (props) => {
       <div className="navbar-right">
         <NavLink to={`/`} onlyActiveOnIndex className='btn'>Dashboard</NavLink>
         <NavLink to={`/about`} className='btn'>About</NavLink>
-        <NavLink to={`/logout`} className='btn'>logout</NavLink>
+        <a className='btn' onClick={props.logout}>logout</a>
       </div>
     )
 

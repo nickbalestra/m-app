@@ -1,15 +1,23 @@
 import React, { Component } from 'react'
 import Header from './header'
 import { connect } from 'react-redux'
+import { doLogout } from '../../ducks/auth'
 
 
 const mapStateToProps = (state) => ({
   loggedIn: !!state.auth.token
 })
 
-const App = ({loggedIn, children}) => (
+
+const mapDispatchToProp = (dispatch, state) => ({
+  logout(){
+    dispatch(doLogout())
+  }
+})
+
+const App = ({loggedIn, children, logout}) => (
   <div>
-    <Header loggedIn={loggedIn} />
+    <Header loggedIn={loggedIn} logout={logout} />
     <div className="content">
       {children}
     </div>
@@ -18,4 +26,5 @@ const App = ({loggedIn, children}) => (
 
 export default connect(
   mapStateToProps,
+  mapDispatchToProp
 )(App)
