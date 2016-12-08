@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Header from './Header'
+import Header from './header'
 import { connect } from 'react-redux'
 
 
@@ -7,15 +7,15 @@ const mapStateToProps = (state) => ({
   loggedIn: !!state.auth.token
 })
 
-const appLayout = (props) => (
+const App = ({loggedIn, children}) => (
   <div>
-    <Header loggedIn={props.loggedIn} />
+    <Header loggedIn={loggedIn} />
     <div className="content">
-      {props.children}
+      {children}
     </div>
   </div>
 )
 
 export default connect(
   mapStateToProps,
-)(appLayout)
+)(App)
