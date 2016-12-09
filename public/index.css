@@ -82,3 +82,35 @@ button {
   color: #E8CF99;
   text-align: center;
 }
+
+
+
+.appLogo {
+  margin-left: 58px;
+  height: 140px;
+  width: 100%;
+  border-radius: 3px;
+  -webkit-clip-path: polygon(68px 43px, 110px 1px, 114px 1px, 136px 23px, 136px 24px, 136px 24px, 136px 90px, 135px 94px, 106px 123px, 102px 121px, 102px 58px, 68px 92px, 34px 58px, 34px 121px, 30px 123px, 2px 94px, 0px 90px, 0px 24px, 0px 24px, 0px 23px, 23px 1px, 26px 1px, 68px 43px);
+clip-path: polygon(68px 43px, 110px 1px, 114px 1px, 136px 23px, 136px 24px, 136px 24px, 136px 90px, 135px 94px, 106px 123px, 102px 121px, 102px 58px, 68px 92px, 34px 58px, 34px 121px, 30px 123px, 2px 94px, 0px 90px, 0px 24px, 0px 24px, 0px 23px, 23px 1px, 26px 1px, 68px 43px);
+}
+
+.appLogo__img {
+  height: 125px;
+  width: 138px;
+
+  background-size: cover;
+  background-position: center;
+}
+
+.blog-list-article-title {
+     /*margin-bottom: 0;*/
+     text-align: center;
+    margin-top: 10px;
+}
+
+
+.blog-list-article-date {
+  text-align: center;
+  width: 100%;
+    left: 0;
+}

@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 const About = (props) => {
   const loggedInNav = (
       <div className="navbar-right">
-        <NavLink to={`/`} onlyActiveOnIndex className='btn'>Dashboard</NavLink>
+
         <NavLink to={`/about`} className='btn'>About</NavLink>
         <a className='btn' onClick={props.logout}>logout</a>
       </div>

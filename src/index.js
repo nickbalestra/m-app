@@ -17,10 +17,19 @@ export default () => (
   <Provider store={ store }>
     <Router history={ history }>
       <Route path="/" component={ App }>
-        <IndexRoute component={ Dashboard } onEnter={ utils.mustBeLoggedIn(store) } />
-        <Route path="/login" component={ Login } onEnter={ utils.mustBeLoggedOut(store) } />
-        <Route path="/about" component={ About } />
+        <IndexRoute onEnter={ utils.sendToApps(store) } />
+        <Route path="apps" component={ Dashboard } />
+        <Route path="apps/:appId" component={ About } />
+        <Route path="apps/:appId/edit" component={ Login } />
+        <Route path="login" component={ Login } onEnter={ utils.mustBeLoggedOut(store) } />
+        <Route path="about" component={ About } />
       </Route>
     </Router>
   </Provider>
 )
+
+/*
+/apps -> lista apps
+../appId -> singole app (con fetch user)
+..../edit -> edit singola app on save send to /appId
+*/

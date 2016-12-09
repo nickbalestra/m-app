@@ -129,7 +129,16 @@ const mustBeLoggedOut = store => (nextState, replace) => {
     }
   }
 
+const sendToApps = store => (nextState, replace) => {
+    if (store.getState().auth.token) {
+      replace({
+        pathname: '/apps'
+      })
+    }
+  }
+
 export const utils = {
   mustBeLoggedIn,
-  mustBeLoggedOut
+  mustBeLoggedOut,
+  sendToApps
 }

@@ -30,16 +30,22 @@ function fetchAppsSuccess(apps) {
 // REDUCER
 // =======================================================
 const initialState = {
-  apps: [],
+  apps: {},
   isFetching: false
 }
+
+const mapAppsToIds = (appsArray) =>
+  appsArray.reduce((apps, app) => {
+    apps[app.id] = app
+    return apps
+  }, {})
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_APPS:
       return {...state, fetching: true}
     case FETCH_APPS_SUCCESS:
-      return {...state, fetching: false, apps: action.payload}
+      return {...state, fetching: false, apps: mapAppsToIds(action.payload)}
     default:
       return state
   }
