@@ -134,6 +134,10 @@ const sendToApps = store => (nextState, replace) => {
       replace({
         pathname: '/apps'
       })
+    } else {
+      replace({
+        pathname: '/login'
+      })
     }
   }
 
