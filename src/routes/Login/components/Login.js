@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { doLogin } from '../../ducks/auth'
-import { setEmail, setPassword } from '../../ducks/user'
+import { doLogin } from '../../../ducks/auth'
+import { setEmail, setPassword } from '../../../ducks/user'
 
 
 const mapStateToProps = (state) => ({
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   }
 })
 
-const loginView = ({email,
+const Login = ({email,
   password,
   handleSubmit,
   handleInputChange,
@@ -53,4 +53,4 @@ const loginView = ({email,
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(loginView)
+)(Login)
