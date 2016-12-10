@@ -13,7 +13,7 @@ const App = ({created, logo, name, id}) => (
       <div className="blog-list-article-excerpt">
         <div className="appLogo">
           <div className="appLogo__img"
-            style={{'backgroundImage': `url(logo-filter.png), url(${logo})`}}
+            style={{'backgroundImage': `url(static/images/logo-filter.png), url(${logo})`}}
           />
         </div>
       </div>
