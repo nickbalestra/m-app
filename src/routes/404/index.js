@@ -1,9 +1,10 @@
-import NotFound from './components/NotFound'
-
 const route = {
   path: '*',
-  getComponent(nextState, cb) {
-    cb(null, NotFound)
+  onEnter(nextState, replace, cb) {
+      replace({
+        pathname: '/'
+      })
+    cb()
   }
 }
 

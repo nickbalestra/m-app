@@ -2,7 +2,7 @@ import Main from '../components/Main'
 import Apps from './Apps'
 import Login from './Login'
 import About from './About'
-import Invalid from './Invalid'
+import NotFound from './404'
 
 
 const rootRoute = {
@@ -14,7 +14,7 @@ const rootRoute = {
         Apps,
         Login,
         About,
-        Invalid
+        NotFound
       ]
     }
   ],
