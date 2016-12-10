@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 
-const invalid = () => (
+const NotFound = () => (
   <div>
     <h2>404</h2>
   </div>
 )
 
-
-module.exports = invalid
+export default NotFound
