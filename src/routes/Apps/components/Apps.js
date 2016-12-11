@@ -1,6 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 import List from './List'
+import Breadcrumbs from './Breadcrumbs'
 
-const Apps = ({children}) => children || <List />
+
+const Apps = ({ children, params, location }) => (
+  <div>
+    <Breadcrumbs
+      appId={ params.appId }
+      pathname={ location.pathname }
+    />
+    { children || <List /> }
+  </div>
+)
 
 export default Apps

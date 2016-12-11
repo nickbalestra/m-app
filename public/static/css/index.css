@@ -114,3 +114,7 @@ clip-path: polygon(68px 43px, 110px 1px, 114px 1px, 136px 23px, 136px 24px, 136p
   width: 100%;
     left: 0;
 }
+
+h1 .active {
+  font-weight: 500;
+}

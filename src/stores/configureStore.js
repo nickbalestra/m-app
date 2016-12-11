@@ -13,7 +13,7 @@ const logger = createLogger()
 
 const enhancer = compose(
   applyMiddleware(epicMiddleware, routerMiddleware, logger),
-  persistState(['auth'])
+  persistState(['auth', 'apps'])
 )
 
 export default function configureStore(preloadedState) {

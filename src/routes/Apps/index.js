@@ -4,7 +4,7 @@ import store from '../../stores'
 
 const route = {
   path: 'apps',
-
+  name: 'apps',
   onEnter(nextState, replace, cb) {
     if (!store.getState().auth.token) {
       replace({

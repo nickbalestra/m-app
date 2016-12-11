@@ -19,31 +19,11 @@ class List extends Component{
 
     if (appComponents.length) {
       appComponents = appComponents.map(id => <App key={id} {...apps[id]} />)
-
     }
 
-
-
     return (
-      <div>
-        <div className="blog-list-header">
-          <h1 className="blog-list-header-title">Your Monzo Apps</h1>
-          {/*
-            <div className="blog-list-header-social-buttons">
-              <span>Follow us:</span>
-              <ul>
-                <li><a href="https://twitter.com/monzo" target="_blank"><i className="fa fa-twitter"></i></a></li>
-                <li><a href="https://www.facebook.com/monzobank" target="_blank"><i className="fa fa-facebook"></i></a></li>
-                <li><a href="https://www.linkedin.com/company/monzo-bank" target="_blank"><i className="fa fa-linkedin"></i></a></li>
-                <li><a href="mailto:hello@monzo.com" target="_blank"><i className="fa fa-envelope"></i></a></li>
-              </ul>
-            </div>
-          */}
-        </div>
-
-        <div className="blog-list-articles">
-          { appComponents }
-        </div>
+      <div className="blog-list-articles">
+        { appComponents }
       </div>
     )
   }

@@ -9,6 +9,7 @@ import NotFound from '../404'
 const rootRoute = {
   childRoutes: [
     {
+      name: 'Root',
       path: '/',
       component: Home,
       childRoutes: [
