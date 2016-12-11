@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment';
 import { Link } from 'react-router'
 
-const App = ({created, logo, name, id}) => (
+const ListItem = ({created, logo, name, id}) => (
   <Link to={`/apps/${id}`} className="blog-list-article">
     <div className="blog-list-article-date">
       Created {moment(created).fromNow()}
@@ -22,4 +22,4 @@ const App = ({created, logo, name, id}) => (
   </Link>
 )
 
-export default App
+export default ListItem

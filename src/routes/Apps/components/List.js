@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { fetchApps } from '../../../ducks/apps'
 import { connect } from 'react-redux'
-import App from './App';
+import ListItem from './ListItem';
 
 
 class List extends Component{
@@ -18,7 +18,7 @@ class List extends Component{
     let appComponents = Object.keys(apps)
 
     if (appComponents.length) {
-      appComponents = appComponents.map(id => <App key={id} {...apps[id]} />)
+      appComponents = appComponents.map(id => <ListItem key={id} {...apps[id]} />)
     }
 
     return (

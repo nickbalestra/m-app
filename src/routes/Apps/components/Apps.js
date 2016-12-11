@@ -1,11 +1,11 @@
 import React from 'react'
 import List from './List'
-import Breadcrumbs from './Breadcrumbs'
+import Navigation from './Navigation'
 
 
 const Apps = ({ children, params, location }) => (
   <div>
-    <Breadcrumbs
+    <Navigation
       appId={ params.appId }
       pathname={ location.pathname }
     />

@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 
 
-const Breadcrumbs = ({appId, pathname, apps}) => {
+const Navigation = ({appId, pathname, apps}) => {
   const appsLink = appId ?
     <Link to="/apps">Apps > </Link>
     : <span className="active">Apps</span>
@@ -15,17 +15,15 @@ const Breadcrumbs = ({appId, pathname, apps}) => {
   const editLink = appId && pathname.match(/\/edit/) &&
     <span className="active"> > Edit</span>
 
-  const routes = (
-    <h1 className="blog-list-header-title">
-      {appsLink}
-      {appLink}
-      {editLink}
-    </h1>
-  )
+
 
   return(
     <div className="blog-list-header">
-      {routes}
+      <h1 className="blog-list-header-title">
+        {appsLink}
+        {appLink}
+        {editLink}
+      </h1>
     </div>
   )
 }
@@ -37,4 +35,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps
-)(Breadcrumbs)
+)(Navigation)
