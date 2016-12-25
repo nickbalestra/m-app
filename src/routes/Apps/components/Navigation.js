@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 
 const Navigation = ({appId, pathname, apps}) => {
   const appsLink = appId ?
-    <Link to="/apps">Apps > </Link>
-    : <span className="active">Apps</span>
+    <Link to="/apps">Your Apps > </Link>
+    : <span className="active">Your Apps</span>
 
   const appLink = appId && !pathname.match(/\/edit/) ?
     <span className="active">{apps[appId]['name']}</span>

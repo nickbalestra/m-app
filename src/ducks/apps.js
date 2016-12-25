@@ -1,4 +1,4 @@
-import Rx from 'rxjs/Rx'
+import xs from 'xstream'
 import { API_URL } from '../constants/api'
 import { doLogout } from './auth'
 
@@ -51,23 +51,53 @@ export default function reducer(state = initialState, action) {
   }
 }
 
-
-// EPIC
+// CYCLE
 // =======================================================
-const epicFetchApps = (action$, store) =>
-  action$
-    .ofType(FETCH_APPS)
-    .mergeMap(() =>
-      Rx.Observable.ajax({
+const cycleFetchApps = (sources) => {
+
+  function networking(sources) {
+    const token$ = sources.STATE
+      .map(({auth}) => auth.token)
+      .filter(auth => auth)
+
+    const fetchAppAction$ = sources.ACTION
+      .filter(({ type }) => type === FETCH_APPS)
+
+    const request$ = xs.combine(fetchAppAction$, token$)
+      .map(([ action, token ]) => ({
         url: `${API_URL}/apps`,
-        method: 'GET',
+        category: FETCH_APPS,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': store.getState().auth.token
+          'Authorization': token
         }
-      })
-      .map(({ response }) => fetchAppsSuccess(response.apps))
-      .catch(error => Rx.Observable.of(doLogout(error.xhr.response)))
-    )
+      }))
+      .take(1)
 
-export const epic = epicFetchApps
+    return request$
+  }
+
+  function intent(sources) {
+    const action$ = sources.HTTP
+      .select(FETCH_APPS)
+      .map((response$) =>
+        response$.replaceError((error) =>
+          xs.of(error.response)
+        ))
+      .flatten()
+      .map((res) =>
+        res.error ?
+          doLogout(res.statusText) :
+          fetchAppsSuccess(res.body.apps)
+        )
+
+    return action$
+  }
+
+  return {
+    ACTION: intent(sources),
+    HTTP: networking(sources)
+  };
+}
+
+export const cycle = cycleFetchApps

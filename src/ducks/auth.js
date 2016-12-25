@@ -1,5 +1,5 @@
-import Rx from 'rxjs/Rx'
-import { combineEpics } from 'redux-observable'
+import xs from 'xstream'
+import { combineCycles } from 'redux-cycle-middleware'
 import { push } from 'react-router-redux'
 import { API_URL } from '../constants/api'
 
@@ -63,48 +63,94 @@ export default function reducer(state = initialState, {type, payload}) {
   }
 }
 
-
-// EPIC
+// CYCLE
 // =======================================================
-const epicLogin = action$ =>
-  action$
-    .ofType(LOGIN)
-    .mergeMap(({ payload }) =>
-      Rx.Observable.ajax({
+const cycleLogin = (sources) => {
+  function networking(sources) {
+    const loginAction$ = sources.ACTION
+      .filter(({ type }) => type === LOGIN)
+
+    const request$ = loginAction$
+      .map(({payload}) => ({
         url: `${API_URL}/login`,
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: {
+        category: LOGIN,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        send: {
           'email': payload.email,
           'password': payload.password
         }
-      })
-      .map(({ response }) => loginSuccess(response.accessToken))
-      .catch(error => Rx.Observable.of({
-        type: LOGIN_FAIL,
-        payload: error.xhr.response,
-        error: true
       }))
-    )
 
-const epicLoginSuccess = action$ =>
-  action$
-    .ofType(LOGIN_SUCCESS)
-    .mapTo(push('/'))
+    return request$
+  }
 
-const epicLogout = action$ =>
-  action$
-    .ofType(LOGOUT)
-    .mapTo(push('/login'))
+  function intent(sources) {
+    const action$ = sources.HTTP
+      .select(LOGIN)
+      .map((response$) =>
+        response$.replaceError((error) =>
+          xs.of(error.response)
+        ))
+      .flatten()
+      .map((res) =>
+        res.error ?
+          {
+            type: LOGIN_FAIL,
+            payload: res.error,
+            error: true
+          }
+          :
+          loginSuccess(res.body.accessToken)
+      )
 
-const epicLoginFail = action$ =>
-  action$
-    .ofType(LOGIN_FAIL)
-    .mapTo(doLogout())
+    return action$
+  }
 
-export const epic = combineEpics(
-    epicLogin,
-    epicLoginSuccess,
-    epicLogout,
-    epicLoginFail
-  )
+  return {
+    ACTION: intent(sources),
+    HTTP: networking(sources)
+  };
+}
+
+const cycleLoginSuccess = (sources) => {
+  function intent(sources) {
+    return sources.ACTION
+      .filter(({type}) => type === LOGIN_SUCCESS)
+      .mapTo(push('/'))
+  }
+  return {
+    ACTION: intent(sources)
+  }
+}
+
+const cycleLogout = (sources) => {
+  function intent(sources) {
+    return sources.ACTION
+      .filter(({type}) => type === LOGOUT)
+      .mapTo(push('/login'))
+  }
+  return {
+    ACTION: intent(sources)
+  }
+}
+
+const cycleLoginFail = (sources) => {
+  function intent(sources) {
+    return sources.ACTION
+      .filter(({type}) => type === LOGIN_FAIL)
+      .mapTo(doLogout())
+  }
+  return {
+    ACTION: intent(sources)
+  }
+}
+
+export const cycle = combineCycles(
+  cycleLogin,
+  cycleLoginSuccess,
+  cycleLogout,
+  cycleLoginFail
+)
