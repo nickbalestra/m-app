@@ -4,8 +4,8 @@ const route = {
   path: 'edit',
   name: 'Edit',
 
-  getComponent(nextState, cb) {
-      cb(null, Edit)
+  getComponent (nextState, cb) {
+    cb(null, Edit)
   }
 }
 

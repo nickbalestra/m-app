@@ -2,7 +2,7 @@ import About from './components/About'
 
 const route = {
   path: 'about',
-  getComponent(nextState, cb) {
+  getComponent (nextState, cb) {
     cb(null, About)
   }
 }

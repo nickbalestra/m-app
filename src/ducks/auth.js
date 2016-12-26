@@ -9,13 +9,12 @@ const LOGIN = 'm-app/auth/LOGIN'
 const LOGIN_SUCCESS = 'm-app/auth/LOGIN_SUCCESS'
 const LOGIN_FAIL = 'm-app/auth/LOGIN_FAIL'
 export const LOGOUT = 'm-app/auth/LOGOUT'
-const LOGOUT_SUCCESS = 'm-app/auth/LOGOUT_SUCCESS'
-const LOGOUT_FAIL = 'm-app/auth/LOGOUT_FAIL'
-
+// const LOGOUT_SUCCESS = 'm-app/auth/LOGOUT_SUCCESS'
+// const LOGOUT_FAIL = 'm-app/auth/LOGOUT_FAIL'
 
 // ACTION CREATORS
 // =======================================================
-export function doLogin(email, password) {
+export function doLogin (email, password) {
   return {
     type: LOGIN,
     payload: {
@@ -25,30 +24,29 @@ export function doLogin(email, password) {
   }
 }
 
-export function doLogout(msg) {
+export function doLogout (msg) {
   return {
     type: LOGOUT,
     payload: msg
   }
 }
 
-function loginSuccess(token) {
+function loginSuccess (token) {
   return {
     type: LOGIN_SUCCESS,
     payload: token
   }
 }
 
-
 // REDUCER
 // =======================================================
 const initialState = {
   inProgress: false,
   token: null,
-  error: null,
+  error: null
 }
 
-export default function reducer(state = initialState, {type, payload}) {
+export default function reducer (state = initialState, {type, payload}) {
   switch (type) {
     case LOGIN:
       return {...state, inProgress: true}
@@ -66,7 +64,7 @@ export default function reducer(state = initialState, {type, payload}) {
 // CYCLE
 // =======================================================
 const cycleLogin = (sources) => {
-  function networking(sources) {
+  function networking (sources) {
     const loginAction$ = sources.ACTION
       .filter(({ type }) => type === LOGIN)
 
@@ -76,7 +74,7 @@ const cycleLogin = (sources) => {
         method: 'POST',
         category: LOGIN,
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         send: {
           'email': payload.email,
@@ -87,7 +85,7 @@ const cycleLogin = (sources) => {
     return request$
   }
 
-  function intent(sources) {
+  function intent (sources) {
     const action$ = sources.HTTP
       .select(LOGIN)
       .map((response$) =>
@@ -96,14 +94,13 @@ const cycleLogin = (sources) => {
         ))
       .flatten()
       .map((res) =>
-        res.error ?
-          {
-            type: LOGIN_FAIL,
-            payload: res.error,
-            error: true
-          }
-          :
-          loginSuccess(res.body.accessToken)
+        res.error
+        ? {
+          type: LOGIN_FAIL,
+          payload: res.error,
+          error: true
+        }
+        : loginSuccess(res.body.accessToken)
       )
 
     return action$
@@ -112,11 +109,11 @@ const cycleLogin = (sources) => {
   return {
     ACTION: intent(sources),
     HTTP: networking(sources)
-  };
+  }
 }
 
 const cycleLoginSuccess = (sources) => {
-  function intent(sources) {
+  function intent (sources) {
     return sources.ACTION
       .filter(({type}) => type === LOGIN_SUCCESS)
       .mapTo(push('/'))
@@ -127,7 +124,7 @@ const cycleLoginSuccess = (sources) => {
 }
 
 const cycleLogout = (sources) => {
-  function intent(sources) {
+  function intent (sources) {
     return sources.ACTION
       .filter(({type}) => type === LOGOUT)
       .mapTo(push('/login'))
@@ -138,7 +135,7 @@ const cycleLogout = (sources) => {
 }
 
 const cycleLoginFail = (sources) => {
-  function intent(sources) {
+  function intent (sources) {
     return sources.ACTION
       .filter(({type}) => type === LOGIN_FAIL)
       .mapTo(doLogout())

@@ -7,7 +7,7 @@ const history = syncHistoryWithStore(browserHistory, store)
 import routes from './routes'
 
 export default () => (
-  <Provider store={ store }>
-    <Router history={ history } routes={ routes } />
+  <Provider store={store}>
+    <Router history={history} routes={routes} />
   </Provider>
 )

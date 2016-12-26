@@ -3,10 +3,10 @@ import store from '../../stores'
 
 const route = {
   path: 'login',
-  getComponent(nextState, cb) {
+  getComponent (nextState, cb) {
     cb(null, Login)
   },
-  onEnter(nextState, replace, cb) {
+  onEnter (nextState, replace, cb) {
     if (store.getState().auth.token) {
       replace({
         pathname: '/'

@@ -1,20 +1,15 @@
 import React, { Component } from 'react'
 import { fetchApps } from '../../../ducks/apps'
 import { connect } from 'react-redux'
-import ListItem from './ListItem';
+import ListItem from './ListItem'
 
-
-class List extends Component{
-  constructor(props) {
-    super(props)
-  }
-
-  componentDidMount(){
+class List extends Component {
+  componentDidMount () {
     this.props.dispatch(fetchApps())
   }
 
-  render(){
-    const { isFetching, apps } = this.props
+  render () {
+    const { apps } = this.props
     let appComponents = Object.keys(apps)
 
     if (appComponents.length) {
@@ -22,7 +17,7 @@ class List extends Component{
     }
 
     return (
-      <div className="blog-list-articles">
+      <div className='blog-list-articles'>
         { appComponents }
       </div>
     )
@@ -30,8 +25,7 @@ class List extends Component{
 }
 
 const mapStateToProps = (state) => ({
-  apps: state.apps.apps,
-  isFetching: state.apps.isFetching
+  apps: state.apps.apps
 })
 
 export default connect(

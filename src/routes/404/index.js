@@ -1,9 +1,9 @@
 const route = {
   path: '*',
-  onEnter(nextState, replace, cb) {
-      replace({
-        pathname: '/'
-      })
+  onEnter (nextState, replace, cb) {
+    replace({
+      pathname: '/'
+    })
     cb()
   }
 }

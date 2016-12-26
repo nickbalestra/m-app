@@ -6,26 +6,24 @@ import { doLogout } from './auth'
 // =======================================================
 const FETCH_APPS = 'm-app/apps/FETCH_APPS'
 const FETCH_APPS_SUCCESS = 'm-app/apps/FETCH_APPS_SUCCESS'
-const FETCH_APPS_FAIL = 'm-app/apps/FETCH_APPS_FAIL'
-const EDIT_APP = 'm-app/apps/EDIT_APP'
-const SAVE_APP = 'm-app/apps/SAVE_APP'
-
+// const FETCH_APPS_FAIL = 'm-app/apps/FETCH_APPS_FAIL'
+// const EDIT_APP = 'm-app/apps/EDIT_APP'
+// const SAVE_APP = 'm-app/apps/SAVE_APP'
 
 // ACTION CREATORS
 // =======================================================
-export function fetchApps() {
+export function fetchApps () {
   return {
     type: FETCH_APPS
   }
 }
 
-function fetchAppsSuccess(apps) {
+function fetchAppsSuccess (apps) {
   return {
     type: FETCH_APPS_SUCCESS,
     payload: apps
   }
 }
-
 
 // REDUCER
 // =======================================================
@@ -40,7 +38,7 @@ const mapAppsToIds = (appsArray) =>
     return apps
   }, {})
 
-export default function reducer(state = initialState, action) {
+export default function reducer (state = initialState, action) {
   switch (action.type) {
     case FETCH_APPS:
       return {...state, fetching: true}
@@ -54,8 +52,7 @@ export default function reducer(state = initialState, action) {
 // CYCLE
 // =======================================================
 const cycleFetchApps = (sources) => {
-
-  function networking(sources) {
+  function networking (sources) {
     const token$ = sources.STATE
       .map(({auth}) => auth.token)
       .filter(auth => auth)
@@ -77,7 +74,7 @@ const cycleFetchApps = (sources) => {
     return request$
   }
 
-  function intent(sources) {
+  function intent (sources) {
     const action$ = sources.HTTP
       .select(FETCH_APPS)
       .map((response$) =>
@@ -86,9 +83,9 @@ const cycleFetchApps = (sources) => {
         ))
       .flatten()
       .map((res) =>
-        res.error ?
-          doLogout(res.statusText) :
-          fetchAppsSuccess(res.body.apps)
+        res.error
+        ? doLogout(res.statusText)
+        : fetchAppsSuccess(res.body.apps)
         )
 
     return action$
@@ -97,7 +94,7 @@ const cycleFetchApps = (sources) => {
   return {
     ACTION: intent(sources),
     HTTP: networking(sources)
-  };
+  }
 }
 
 export const cycle = cycleFetchApps

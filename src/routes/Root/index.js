@@ -5,7 +5,6 @@ import Login from '../Login'
 import About from '../About'
 import NotFound from '../404'
 
-
 const rootRoute = {
   childRoutes: [
     {
@@ -20,7 +19,7 @@ const rootRoute = {
       ]
     }
   ],
-  onEnter(nextState, replace, cb) {
+  onEnter (nextState, replace, cb) {
     if (nextState.location.pathname === '/') {
       replace({
         pathname: '/apps'
@@ -28,7 +27,7 @@ const rootRoute = {
     }
     cb()
   },
-  onChange(prevState, nextState, replace, cb) {
+  onChange (prevState, nextState, replace, cb) {
     if (nextState.location.pathname === '/') {
       replace({
         pathname: '/apps'

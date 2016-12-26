@@ -4,20 +4,21 @@ import store from '../../../../stores'
 
 const route = {
   path: ':appId',
-  getChildRoutes(partialNextState, cb) {
-      cb(null, [Edit])
+  getChildRoutes (partialNextState, cb) {
+    cb(null, [Edit])
   },
 
-  getComponents(nextState, cb) {
-      cb(null, App)
+  getComponents (nextState, cb) {
+    cb(null, App)
   },
 
-  onEnter(nextState, replace, cb){
+  onEnter (nextState, replace, cb) {
     const apps = store.getState().apps.apps
-    if (!apps[nextState.params.appId])
+    if (!apps[nextState.params.appId]) {
       replace({
         pathname: '/apps'
       })
+    }
     cb()
   }
 }

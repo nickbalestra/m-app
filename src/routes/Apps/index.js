@@ -5,7 +5,7 @@ import store from '../../stores'
 const route = {
   path: 'apps',
   name: 'apps',
-  onEnter(nextState, replace, cb) {
+  onEnter (nextState, replace, cb) {
     if (!store.getState().auth.token) {
       replace({
         pathname: '/login',
@@ -15,11 +15,11 @@ const route = {
     cb()
   },
 
-  getChildRoutes(partialNextState, cb) {
-      cb(null, [App])
+  getChildRoutes (partialNextState, cb) {
+    cb(null, [App])
   },
 
-  getComponent(nextState, cb) {
+  getComponent (nextState, cb) {
     cb(null, Apps)
   }
 }

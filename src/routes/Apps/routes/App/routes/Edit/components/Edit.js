@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 const Edit = ({children, params}) => (
   <div>
@@ -6,6 +6,5 @@ const Edit = ({children, params}) => (
     {console.log(children, params)}
   </div>
 )
-
 
 export default Edit
