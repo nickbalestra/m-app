@@ -7,9 +7,11 @@
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:dev": "webpack-dev-server --inline --content-base public/ --history-api-fallback",
     "start:prod": "webpack && node server",
-    "eslint": "standard 'src/**/*.js' ",
-    "test": "npm run eslint"
+    "eslint": "standard 'src/**/*.js' "
   },
+  "pre-commit": [
+    "eslint"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
@@ -38,6 +40,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-2": "^6.18.0",
     "http-server": "^0.8.5",
+    "pre-commit": "^1.2.2",
     "standard": "^8.6.0",
     "webpack": "^1.12.13",
     "webpack-dev-server": "^1.14.1"
