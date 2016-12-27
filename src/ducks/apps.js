@@ -1,6 +1,7 @@
 import xs from 'xstream'
 import { API_URL } from '../constants/api'
 import { doLogout } from './auth'
+import dropRepeats from 'xstream/extra/dropRepeats'
 
 // ACTION TYPES (Format: app-name/reducer/ACTION_TYPE)
 // =======================================================
@@ -56,6 +57,7 @@ const cycleFetchApps = (sources) => {
     const token$ = sources.STATE
       .map(({auth}) => auth.token)
       .filter(auth => auth)
+      .compose(dropRepeats())
 
     const fetchAppAction$ = sources.ACTION
       .filter(({ type }) => type === FETCH_APPS)
@@ -69,7 +71,6 @@ const cycleFetchApps = (sources) => {
           'Authorization': token
         }
       }))
-      .take(1)
 
     return request$
   }
@@ -86,7 +87,7 @@ const cycleFetchApps = (sources) => {
         res.error
         ? doLogout(res.statusText)
         : fetchAppsSuccess(res.body.apps)
-        )
+      )
 
     return action$
   }
