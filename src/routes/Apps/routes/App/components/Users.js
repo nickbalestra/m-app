@@ -1,47 +1,39 @@
-import React from 'react'
-// import { connect } from 'react-redux'
-// import { fetchUsers } from '../../../ducks/users'
-// import { Link } from 'react-router'
-// import moment from 'moment'
+import React, { Component } from 'react'
+import { initUsers } from '../../../../../ducks/users'
+import { connect } from 'react-redux'
+// import User from './User'
 
-// const mapStateToProps = (state) => ({
-//   apps: state.apps.apps
-// })
+const User = ({name, email}) => (
+  <div>
+    <p>
+      Name: {name}<br />
+      Email: {email}
+    </p>
+  </div>
+)
 
-const Users = ({name, email, avatar}) => {
-  return (
-    <section id='article-text'>
-      <h1>Users</h1>
-      <div>
-        <p>
-          Name: Nick<br />
-          Email: somewhere@overtherainbow.com
-        </p>
-      </div>
-      <hr />
-      <div>
-        <p>
-          Name: Nick<br />
-          Email: somewhere@overtherainbow.com
-        </p>
-      </div>
-      <hr />
-      <div>
-        <p>
-          Name: Nick<br />
-          Email: somewhere@overtherainbow.com
-        </p>
-      </div>
-      <hr />
-      <a>BUTTON</a>
-    </section>
-  )
+class Users extends Component {
+  componentDidMount () {
+    this.props.dispatch(initUsers(this.props.appId))
+  }
+
+  render () {
+    let { users } = this.props
+    const userList = users.map((user) => <User key={user.id} {...user} />)
+
+    return (
+      <section id='article-text'>
+        <h1>Users</h1>
+        { userList }
+      </section>
+    )
+  }
 }
 
-// const AppView = connect(
-//   mapStateToProps
-// )(App)
+const mapStateToProps = (state) => ({
+  users: state.users.users
+})
 
-// const View = ({children, params}) => children || <AppView appId={params.appId} />
-
-export default Users
+export default connect(
+  mapStateToProps
+)(Users)

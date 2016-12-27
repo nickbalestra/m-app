@@ -1,10 +1,13 @@
 import xs from 'xstream'
+import { combineCycles } from 'redux-cycle-middleware'
 import { API_URL } from '../constants/api'
 import { doLogout } from './auth'
+import dropRepeats from 'xstream/extra/dropRepeats'
 
 // ACTION TYPES (Format: app-name/reducer/ACTION_TYPE)
 // =======================================================
 const FETCH_USERS = 'm-app/apps/FETCH_USERS'
+const INIT_USERS = 'm-app/apps/INIT_USERS'
 const FETCH_USERS_SUCCESS = 'm-app/apps/FETCH_USERS_SUCCESS'
 // const FETCH_APPS_FAIL = 'm-app/apps/FETCH_APPS_FAIL'
 // const EDIT_APP = 'm-app/apps/EDIT_APP'
@@ -15,6 +18,13 @@ const FETCH_USERS_SUCCESS = 'm-app/apps/FETCH_USERS_SUCCESS'
 export function fetchUsers (id) {
   return {
     type: FETCH_USERS,
+    payload: id
+  }
+}
+
+export function initUsers (id) {
+  return {
+    type: INIT_USERS,
     payload: id
   }
 }
@@ -41,6 +51,8 @@ const initialState = {
 
 export default function reducer (state = initialState, action) {
   switch (action.type) {
+    case INIT_USERS:
+      return {...state, users: []}
     case FETCH_USERS:
       return {...state, fetching: true}
     case FETCH_USERS_SUCCESS:
@@ -57,16 +69,19 @@ const cycleFetchUsers = (sources) => {
     const token$ = sources.STATE
       .map(({auth}) => auth.token)
       .filter(auth => auth)
+      .compose(dropRepeats())
 
     const usersOffset$ = sources.STATE
       .map(({users}) => users.users.length)
+      .compose(dropRepeats())
+      .take(1)
 
     const fetchAppAction$ = sources.ACTION
       .filter(({ type }) => type === FETCH_USERS)
 
     const request$ = xs.combine(fetchAppAction$, token$, usersOffset$)
       .map(([ action, token, offset ]) => ({
-        url: `${API_URL}/${action.payload}/users`,
+        url: `${API_URL}/apps/${action.payload}/users`,
         category: FETCH_USERS,
         headers: {
           'Content-Type': 'application/json',
@@ -76,7 +91,7 @@ const cycleFetchUsers = (sources) => {
           offset
         }
       }))
-      .take(1)
+      // .take(1)
 
     return request$
   }
@@ -104,4 +119,19 @@ const cycleFetchUsers = (sources) => {
   }
 }
 
-export const cycle = cycleFetchUsers
+const cycleInitUsers = (sources) => {
+  function intent (sources) {
+    return sources.ACTION
+    .filter(({type}) => type === INIT_USERS)
+    .map(({payload}) => fetchUsers(payload))
+  }
+
+  return {
+    ACTION: intent(sources)
+  }
+}
+
+export const cycle = combineCycles(
+  cycleFetchUsers,
+  cycleInitUsers
+)

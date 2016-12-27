@@ -24,7 +24,7 @@ const App = ({apps, appId}) => {
           {/* <div className="featured-article-subtitle">Collecting money from other people has always been a pain so today we're introducting Monzo.me on iOS!</div> */}
         </div>
       </div>
-      <Users />
+      <Users appId={appId} />
     </div>
   )
 }
