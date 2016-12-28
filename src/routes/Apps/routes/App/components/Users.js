@@ -3,13 +3,22 @@ import { initUsers } from '../../../../../ducks/users'
 import { connect } from 'react-redux'
 // import User from './User'
 
-const User = ({name, email}) => (
-  <div>
-    <p>
-      Name: {name}<br />
-      Email: {email}
-    </p>
-  </div>
+const User = ({name, email, avatar}) => (
+  <section className='blog-post-author'>
+    <div className='blog-post-author-container'>
+      <div className='m-app userAvatar'>
+        <div
+          className='blog-post-author-image'
+          style={{'backgroundImage': `url(/static/images/logo-filter.png), url(${avatar})`}}
+        />
+      </div>
+      <div className='blog-post-author-details'>
+        <p className='blog-post-author-name'>{name}</p>
+        <p className='blog-post-author-title'><a href={`mailto:${email}`}>{email}</a></p>
+      </div>
+    </div>
+    <hr />
+  </section>
 )
 
 class Users extends Component {
@@ -24,7 +33,9 @@ class Users extends Component {
     return (
       <section id='article-text'>
         <h1>Users</h1>
-        { userList }
+        <section id='article-text' className='container content blog20161212christmas-faqs'>
+          { userList }
+        </section>
       </section>
     )
   }
