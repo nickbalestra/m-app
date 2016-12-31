@@ -3,6 +3,7 @@ import { initUsers, fetchUsers } from '../../../../../ducks/users'
 import { connect } from 'react-redux'
 // import User from './User'
 
+// TODO: clean markup
 const User = ({name, email, avatar}) => (
   <section className='blog-post-author'>
     <div className='blog-post-author-container'>
@@ -29,14 +30,21 @@ class Users extends Component {
   render () {
     let { users } = this.props
     const userList = users.map((user) => <User key={user.id} {...user} />)
+    const loadMore = users.length && users.length % 25 === 0
+      ? (
+        <div className='load-more' >
+          <a className='btn-wide' onClick={this.props.dispatch.bind(null, fetchUsers(this.props.appId))}>Load more</a>
+        </div>
+      )
+      : <div />
 
     return (
-      <section id='article-text'>
+      <section id='article-text' className='container content'>
         <h1>Users</h1>
-        <section id='article-text' className='container content blog20161212christmas-faqs'>
+        <div className='user-list' >
           { userList }
-        </section>
-        <a onClick={this.props.dispatch.bind(null, fetchUsers(this.props.appId))}>Load more</a>
+        </div>
+        { loadMore }
       </section>
     )
   }
