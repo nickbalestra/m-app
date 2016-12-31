@@ -3,6 +3,7 @@ import { combineCycles } from 'redux-cycle-middleware'
 import { API_URL } from '../constants/api'
 import { doLogout } from './auth'
 import dropRepeats from 'xstream/extra/dropRepeats'
+import sampleCombine from 'xstream/extra/sampleCombine'
 
 // ACTION TYPES (Format: app-name/reducer/ACTION_TYPE)
 // =======================================================
@@ -73,13 +74,12 @@ const cycleFetchUsers = (sources) => {
 
     const usersOffset$ = sources.STATE
       .map(({users}) => users.users.length)
-      .compose(dropRepeats())
-      .take(1)
 
     const fetchAppAction$ = sources.ACTION
       .filter(({ type }) => type === FETCH_USERS)
 
-    const request$ = xs.combine(fetchAppAction$, token$, usersOffset$)
+    const request$ = fetchAppAction$
+      .compose(sampleCombine(token$, usersOffset$))
       .map(([ action, token, offset ]) => ({
         url: `${API_URL}/apps/${action.payload}/users`,
         category: FETCH_USERS,
@@ -91,7 +91,6 @@ const cycleFetchUsers = (sources) => {
           offset
         }
       }))
-      // .take(1)
 
     return request$
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { initUsers } from '../../../../../ducks/users'
+import { initUsers, fetchUsers } from '../../../../../ducks/users'
 import { connect } from 'react-redux'
 // import User from './User'
 
@@ -36,6 +36,7 @@ class Users extends Component {
         <section id='article-text' className='container content blog20161212christmas-faqs'>
           { userList }
         </section>
+        <a onClick={this.props.dispatch.bind(null, fetchUsers(this.props.appId))}>Load more</a>
       </section>
     )
   }
