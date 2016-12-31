@@ -13,7 +13,7 @@ const App = ({apps, appId}) => {
   return (
     <div>
       <div className='featured-article featured-article--blank'>
-        <div>
+        <div style={{'backgroundImage': `url(/static/images/logo-filter.png), url(${app.logo})`}}>
           <div className='featured-article-date'>
             Created: {moment(app.created).format('Do MMM YYYY')}
           </div>

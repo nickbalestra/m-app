@@ -4,6 +4,7 @@ import { API_URL } from '../constants/api'
 import { doLogout } from './auth'
 import dropRepeats from 'xstream/extra/dropRepeats'
 import sampleCombine from 'xstream/extra/sampleCombine'
+import delay from 'xstream/extra/delay'
 
 // ACTION TYPES (Format: app-name/reducer/ACTION_TYPE)
 // =======================================================
@@ -74,6 +75,7 @@ const cycleFetchUsers = (sources) => {
 
     const usersOffset$ = sources.STATE
       .map(({users}) => users.users.length)
+      .debug()
 
     const fetchAppAction$ = sources.ACTION
       .filter(({ type }) => type === FETCH_USERS)
@@ -91,6 +93,7 @@ const cycleFetchUsers = (sources) => {
           offset
         }
       }))
+      .debug()
 
     return request$
   }
@@ -123,6 +126,7 @@ const cycleInitUsers = (sources) => {
     return sources.ACTION
     .filter(({type}) => type === INIT_USERS)
     .map(({payload}) => fetchUsers(payload))
+    .compose(delay(0))
   }
 
   return {
