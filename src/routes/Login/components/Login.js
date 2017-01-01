@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { doLogin } from '../../../ducks/auth'
-import { setEmail, setPassword } from '../../../ducks/user'
+import { doLogin } from '../../../stores/ducks/auth'
+import { setEmail, setPassword } from '../../../stores/ducks/user'
 
 const mapStateToProps = (state) => ({
   ...state.user,

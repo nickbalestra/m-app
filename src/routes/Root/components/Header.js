@@ -2,7 +2,7 @@ import React from 'react'
 import NavLink from './NavLink'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { doLogout } from '../../../ducks/auth'
+import { doLogout } from '../../../stores/ducks/auth'
 
 const Header = ({logout, loggedIn}) => (
   <header className=''>

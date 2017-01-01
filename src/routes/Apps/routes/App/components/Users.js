@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { initUsers, fetchUsers } from '../../../../../ducks/users'
+import { initUsers, fetchUsers } from '../../../../../stores/ducks/users'
 import { connect } from 'react-redux'
 // import User from './User'
 

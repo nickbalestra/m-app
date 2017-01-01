@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { fetchApps } from '../../../ducks/apps'
+import { fetchApps } from '../../../stores/ducks/apps'
 import { connect } from 'react-redux'
 import ListItem from './ListItem'
 

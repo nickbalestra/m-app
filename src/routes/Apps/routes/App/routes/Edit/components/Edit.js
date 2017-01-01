@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { editApp } from '../../../../../../../ducks/apps'
+import { editApp } from '../../../../../../../stores/ducks/apps'
 import { Link } from 'react-router'
 
 const mapStateToProps = (state) => ({
@@ -31,9 +31,7 @@ class Edit extends Component {
     event.preventDefault()
     const app = this.props.apps[this.props.params.appId]
     const {name, logo} = this.state
-    if (name !== app.name || logo !== app.logo) {
-      this.props.dispatch(editApp(app.id, name, logo))
-    }
+    this.props.dispatch(editApp(app.id, name, logo))
   }
 
   render () {
