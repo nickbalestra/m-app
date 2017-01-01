@@ -47,10 +47,7 @@ class Edit extends Component {
           <label><input name='name' onChange={this.handleInputChange} placeholder='name' value={this.state.name} /></label>
           <label><input name='logo' onChange={this.handleInputChange} placeholder='logo' value={this.state.logo} /></label>
           <button type='submit'>Save</button>
-
         </form>
-
-        {console.log(this.props)}
       </div>
     )
   }

@@ -75,7 +75,6 @@ const cycleFetchUsers = (sources) => {
 
     const usersOffset$ = sources.STATE
       .map(({users}) => users.users.length)
-      .debug()
 
     const fetchAppAction$ = sources.ACTION
       .filter(({ type }) => type === FETCH_USERS)
@@ -93,7 +92,6 @@ const cycleFetchUsers = (sources) => {
           offset
         }
       }))
-      .debug()
 
     return request$
   }
