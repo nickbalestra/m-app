@@ -3,6 +3,7 @@ import { combineCycles } from 'redux-cycle-middleware'
 import { API_URL } from '../constants/api'
 import { doLogout } from './auth'
 import dropRepeats from 'xstream/extra/dropRepeats'
+import { push } from 'react-router-redux'
 
 // ACTION TYPES (Format: app-name/reducer/ACTION_TYPE)
 // =======================================================
@@ -58,6 +59,11 @@ const mapAppsToIds = (appsArray) =>
     return apps
   }, {})
 
+const updateApps = (apps, app) => {
+  apps[app.id] = app
+  return apps
+}
+
 export default function reducer (state = initialState, action) {
   switch (action.type) {
     case FETCH_APPS:
@@ -67,8 +73,7 @@ export default function reducer (state = initialState, action) {
     case EDIT_APP:
       return {...state, fetching: true}
     case SAVE_APP:
-      const app = action.payload
-      return {...state, fetching: false, apps: {...state.apps, nnnn: app}}
+      return {...state, fetching: false, apps: updateApps(state.apps, action.payload)}
     default:
       return state
   }
@@ -173,7 +178,22 @@ const cycleEditApp = (sources) => {
   }
 }
 
+const cycleSaveApp = (sources) => {
+  function intent (sources) {
+    const action$ = sources.ACTION
+      .filter(({type}) => type === SAVE_APP)
+      .map(({payload}) => push(`/apps/${payload.id}`))
+
+    return action$
+  }
+
+  return {
+    ACTION: intent(sources)
+  }
+}
+
 export const cycle = combineCycles(
   cycleFetchApps,
-  cycleEditApp
+  cycleEditApp,
+  cycleSaveApp
 )
