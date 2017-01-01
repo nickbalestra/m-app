@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { editApp } from '../../../../../../../ducks/apps'
+import { Link } from 'react-router'
 
 const mapStateToProps = (state) => ({
   apps: state.apps.apps
 })
-// default value of the form field taken from app values
 
 class Edit extends Component {
-
   constructor (props) {
     super(props)
     this.state = {
@@ -39,15 +38,29 @@ class Edit extends Component {
 
   render () {
     const app = this.props.apps[this.props.params.appId]
+    const {name, logo} = this.state
+    const savable = name !== app.name || logo !== app.logo
+
+    const saveAction = savable
+    ? <div className='featured-article-category'>
+      <a className='btn btn--edit btn--save' onClick={this.handleSumbit}>Save Changes</a>
+      or <Link className='btn btn--cancel' to={`/apps/${app.id}`}>Cancel</Link>
+    </div>
+    : ''
 
     return (
       <div>
-        <h2>Edit App {app.name} </h2>
-        <form onSubmit={this.handleSumbit}>
-          <label><input name='name' onChange={this.handleInputChange} placeholder='name' value={this.state.name} /></label>
-          <label><input name='logo' onChange={this.handleInputChange} placeholder='logo' value={this.state.logo} /></label>
-          <button type='submit'>Save</button>
-        </form>
+        <div className='featured-article featured-article--blank edit'>
+          <div style={{'backgroundImage': `url(/static/images/logo-filter.png), url(${this.state.logo})`}}>
+            { saveAction }
+            <div className='featured-article-title edit--input'>
+              <input autoFocus className='name' name='name' onChange={this.handleInputChange} placeholder='name' value={this.state.name} />
+            </div>
+            <div className='featured-article-subtitle edit--input'>
+              <input name='logo' onChange={this.handleInputChange} placeholder='logo' value={this.state.logo} />
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

@@ -271,5 +271,34 @@ h1.blog-list-header-title a {
 }
 
 a.btn-wide {
-   color: #fff !important;
+  color: #fff !important;
 }
+
+.featured-article-subtitle {
+  max-width: none;
+}
+
+.edit--input {
+  width: 100%;
+}
+
+.edit--input input{
+  background-color: transparent;
+  padding: 0;
+  text-align: center;
+}
+
+input.name {
+  font-size: 40px;
+  line-height: 45px;
+  font-weight: 700;
+}
+
+.btn--save {
+  margin-right: 8px;
+}
+
+.featured-article.edit {
+  margin-bottom: 30px;
+}
+
