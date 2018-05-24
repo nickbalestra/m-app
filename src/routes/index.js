@@ -1,2 +1,2 @@
-import rootRoute from './Root'
-export default rootRoute
+import rootRoute from "./Root";
+export default rootRoute;

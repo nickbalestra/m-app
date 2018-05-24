@@ -1,11 +1,11 @@
 const route = {
-  path: '*',
-  onEnter (nextState, replace, cb) {
+  path: "*",
+  onEnter(nextState, replace, cb) {
     replace({
-      pathname: '/'
-    })
-    cb()
+      pathname: "/"
+    });
+    cb();
   }
-}
+};
 
-export default route
+export default route;

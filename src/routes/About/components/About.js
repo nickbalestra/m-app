@@ -1,45 +1,38 @@
-import React from 'react'
+import React from "react";
 
 const About = () => (
-  <article className='blog-post'>
-    <header className='blog-post-header blog-post-header--blank'>
-      <div className='container container--narrow'>
-        <div className='date'>Dicember 2016</div>
-        <h1 className='post-title'>About</h1>
+  <article className="blog-post">
+    <header className="blog-post-header blog-post-header--blank">
+      <div className="container container--narrow">
+        <div className="date">Dicember 2016 - May 2018</div>
+        <h1 className="post-title">My Mondo Code Challange</h1>
       </div>
     </header>
 
-    <section id='article-text' className='container content'>
-      <div id='article-text-anchor' />
+    <section id="article-text" className="container content">
+      <div id="article-text-anchor" />
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>
+        Two years ago, I set my self to go through some of the code challenges I
+        didn't have time to tackle during my job hunting process.
+      </p>
 
-      <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-
-      <hr />
-
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-      <ol>
-        <li>
-          <p><strong>First</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </li>
-        <li>
-          <p><strong>Second</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </li>
-        <li>
-          <p><strong>Last</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        </li>
-      </ol>
-
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-      <h1 id='autonomy'>First</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ✌️ </p>
-
-      <hr />
+      <p>
+        This one is the one I enjoyed the most. Not only because I found the
+        challenge to be tackling important/common points like Authentication,
+        Pagination, Routing, CRUD,... But cause it offered me a canvas to
+        explore some new solutions. This unexpected journey led me to co-author
+        a{" "}
+        <a
+          href="https://github.com/cyclejs-community/redux-cycles"
+          target="_blank"
+        >
+          js library
+        </a>{" "}
+        that got more than 650 stars on GitHub, and that blew my mind.
+      </p>
     </section>
   </article>
-)
+);
 
-export default About
+export default About;

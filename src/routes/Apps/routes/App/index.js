@@ -1,26 +1,26 @@
-import App from './components/App'
-import Edit from './routes/Edit'
-import store from '../../../../stores'
+import App from "./components/App";
+import Edit from "./routes/Edit";
+import store from "../../../../stores";
 
 const route = {
-  path: ':appId',
-  getChildRoutes (partialNextState, cb) {
-    cb(null, [Edit])
+  path: ":appId",
+  getChildRoutes(partialNextState, cb) {
+    cb(null, [Edit]);
   },
 
-  getComponents (nextState, cb) {
-    cb(null, App)
+  getComponents(nextState, cb) {
+    cb(null, App);
   },
 
-  onEnter (nextState, replace, cb) {
-    const apps = store.getState().apps.apps
+  onEnter(nextState, replace, cb) {
+    const apps = store.getState().apps.apps;
     if (!apps[nextState.params.appId]) {
       replace({
-        pathname: '/apps'
-      })
+        pathname: "/apps"
+      });
     }
-    cb()
+    cb();
   }
-}
+};
 
-export default route
+export default route;

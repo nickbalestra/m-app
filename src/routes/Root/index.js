@@ -1,41 +1,35 @@
-import Home from './components/Home'
+import Home from "./components/Home";
 
-import Apps from '../Apps'
-import Login from '../Login'
-import About from '../About'
-import NotFound from '../404'
+import Apps from "../Apps";
+import Login from "../Login";
+import About from "../About";
+import NotFound from "../404";
 
 const rootRoute = {
   childRoutes: [
     {
-      name: 'Root',
-      path: '/',
+      name: "Root",
+      path: "/",
       component: Home,
-      childRoutes: [
-        Apps,
-        Login,
-        About,
-        NotFound
-      ]
+      childRoutes: [Apps, Login, About, NotFound]
     }
   ],
-  onEnter (nextState, replace, cb) {
-    if (nextState.location.pathname === '/') {
+  onEnter(nextState, replace, cb) {
+    if (nextState.location.pathname === "/") {
       replace({
-        pathname: '/apps'
-      })
+        pathname: "/apps"
+      });
     }
-    cb()
+    cb();
   },
-  onChange (prevState, nextState, replace, cb) {
-    if (nextState.location.pathname === '/') {
+  onChange(prevState, nextState, replace, cb) {
+    if (nextState.location.pathname === "/") {
       replace({
-        pathname: '/apps'
-      })
+        pathname: "/apps"
+      });
     }
-    cb()
+    cb();
   }
-}
+};
 
-export default rootRoute
-
+export default rootRoute;
